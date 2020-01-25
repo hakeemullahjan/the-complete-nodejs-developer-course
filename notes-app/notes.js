@@ -1,4 +1,5 @@
 const fs=require("fs")
+const chalk=require("chalk")
 
 function getNotes(){
     return 'Your notes....'
@@ -26,7 +27,12 @@ const removeNote=function (title,body){
     const notesToKeep=notes.filter(function(note){
         return note.title !== title
     })
-    saveNotes(notesToKeep)
+    if(notes.length > notesToKeep.length){
+        console.log(chalk.bgGreen("Note removed"))
+        saveNotes(notesToKeep)
+    }else{
+        console.log(chalk.bgRed('No note found'))
+    }
 }
 
 const saveNotes=function(notes){
