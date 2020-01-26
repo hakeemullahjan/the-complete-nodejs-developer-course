@@ -7,8 +7,9 @@ const getNotes=()=>{
 
 const addNote=(title,body)=>{
     const notes=loadNotes()
-    const duplicateNotes=notes.filter((note) => note.title===title)
-    if(duplicateNotes.length===0){
+    // const duplicateNotes=notes.filter((note) => note.title===title)
+    const duplicateNote=notes.find((note) => note.title===title)
+    if(!duplicateNote){
         notes.push({
             title:title,
             body:body
@@ -40,6 +41,17 @@ const listNotes=(title,body)=>{
     });
 }
 
+const readNote=(title,body)=>{
+    const notes=loadNotes()
+    const noteToFind=notes.find(note=>note.title === title)
+    if(!noteToFind){
+        console.log(chalk.red("No note found!"))
+    }else{
+        console.log(chalk.yellow(noteToFind.title))
+        console.log(noteToFind.body)
+    }
+}
+
 const saveNotes=(notes)=>{
     const dataJSON=JSON.stringify(notes)
     fs.writeFileSync('notes.json',dataJSON)
@@ -59,5 +71,6 @@ module.exports={
     getNotes:getNotes,
     addNote:addNote,
     removeNote:removeNote,
-    listNotes:listNotes
+    listNotes:listNotes,
+    readNote:readNote
 }
