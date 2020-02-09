@@ -28,79 +28,79 @@
 //     console.log("Removing...")
 // }
 
-const notes=require("./notes")
+const notes = require("./notes")
 
-const yargs=require("yargs")
+const yargs = require("yargs")
 yargs.version("1.2.0")
 //add, remove , read , list
 //adding command
 yargs.command({
-    command:"add",
-    describe:"Add a new note",
-    builder:{
-        title:{
-            describe:"Note title",
-            demandOption:true,
-            type:"string"
+    command: "add",
+    describe: "Add a new note",
+    builder: {
+        title: {
+            describe: "Note title",
+            demandOption: true,
+            type: "string"
         },
-        body:{
-            describe:"THIS IS MY BODY",
-            demandOption:true,
-            type:String,
+        body: {
+            describe: "THIS IS MY BODY",
+            demandOption: true,
+            type: String,
         }
     },
-    handler(argv){
-        notes.addNote(argv.title,argv.body)
+    handler(argv) {
+        notes.addNote(argv.title, argv.body)
     }
 })
 
 //remove commands
 yargs.command({
-    command:"remove",
-    describe:"Remove a note",
-    builder:{
-        title:{
-            describe:"Remove the title",
-            demandOption:true,
-            type:String
+    command: "remove",
+    describe: "Remove a note",
+    builder: {
+        title: {
+            describe: "Remove the title",
+            demandOption: true,
+            type: String
         },
-        body:{
-            describe:"THIS IS REMOVE BODY",
-            demandOption:true,
-            type:String
+        body: {
+            describe: "THIS IS REMOVE BODY",
+            demandOption: true,
+            type: String
         }
     },
-    handler(argv){
-       notes.removeNote(argv.title,argv.body)
+    handler(argv) {
+        notes.removeNote(argv.title, argv.body)
     }
 })
 
 
 //list command
 yargs.command({
-    command:"list",
-    describe:"List a note",
-    handler(argv){
+    command: "list",
+    describe: "List a note",
+    handler(argv) {
         console.log("Listing the notes")
-        notes.listNotes(argv.title,argv.body)
+        notes.listNotes(argv.title, argv.body)
     }
 })
 
 
 //read command
 yargs.command({
-    command:'read',
-    describe:"Read a note",
-    builder:{
-        title:{
-            describe:"Note a list",
-            demandOption:true,
-            type:String
+    command: 'read',
+    describe: "Read a note",
+    builder: {
+        title: {
+            describe: "Note a list",
+            demandOption: true,
+            type: String
         }
     },
-    handler(argv){
+    handler(argv) {
         console.log('Reading the notes')
-        notes.readNote(argv.title,argv.body)
+        notes.readNote(argv.title, argv.body)
     }
 })
 
