@@ -95,11 +95,35 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true, useUnifiedTopology: 
     //     console.log(task)
     // })
 
-    db.collection('tasks').find({ completed: true }).toArray((error, tasks) => {
-        if (error) {
-            return console.log(error)
+    // db.collection('tasks').find({ completed: true }).toArray((error, tasks) => {
+    //     if (error) {
+    //         return console.log(error)
+    //     }
+    //     console.log(tasks)
+    // })
+
+    // db.collection("users").updateOne({
+    //     _id: new ObjectID("5e8b24e2cab31438049dbafb")
+    // }, {
+    //     $inc: {
+    //         age: 10
+    //     }
+    // }).then((result) => {
+    //     console.log(result)
+    // }).catch((error) => {
+    //     console.log(error)
+    // })
+
+    db.collection("tasks").updateMany({
+        completed: false
+    }, {
+        $set: {
+            completed: true
         }
-        console.log(tasks)
+    }).then((result) => {
+        console.log(result)
+    }).catch((error) => {
+        console.log(error)
     })
 
 })
