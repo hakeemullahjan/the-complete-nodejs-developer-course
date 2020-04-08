@@ -47,6 +47,25 @@ app.post('/tasks', (req, res) => {
     })
 })
 
+app.get("/tasks", (req, res) => {
+    Task.find({}).then((tasks) => {
+        res.send(tasks)
+    }).catch((err) => {
+        res.status(500).send(err)
+    })
+})
+
+app.get("/tasks/:id", (req, res) => {
+    Task.findById(req.params.id).then((task) => {
+        if (!task) {
+            return res.status(404).send()
+        }
+        res.send(task)
+    }).catch((err) => {
+        res.status(500).send(err)
+    })
+})
+
 app.patch("/tasks/:id", async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['description', 'completed']
