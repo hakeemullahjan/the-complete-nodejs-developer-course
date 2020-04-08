@@ -7,46 +7,45 @@ mongoose.connect("mongodb://127.0.0.1:27017/task-manager-api", {
     useUnifiedTopology: true
 })
 
-const User = mongoose.model("Users", {
-    name: {
-        type: String,
-        required: true,
-        uppercase: true,
-        trim: true
-    },
-    age: {
-        type: Number,
-        default: 0,
-        validate(value) {
-            if (value < 0) {
-                throw new Error("Age must be positive number")
-            }
-        }
-    },
-    email: {
-        type: String,
-        required: true,
-        lowercase: true,
-        trim: true,
-        validate(value) {
-            if (!validator.isEmail(value)) {
-                throw new Error("Email is invalid!")
-            }
-        }
-    },
-    password: {
-        type: String,
-        minlength: 6,
-        required: true,
-        trim: true,
-        validate(value) {
-            if (value.toLowerCase().includes('password')) {
-                throw new Error("Please enter correct 'password'")
-            }
-        }
-    }
-
-})
+// const User = mongoose.model("Users", {
+//     name: {
+//         type: String,
+//         required: true,
+//         uppercase: true,
+//         trim: true
+//     },
+//     age: {
+//         type: Number,
+//         default: 0,
+//         validate(value) {
+//             if (value < 0) {
+//                 throw new Error("Age must be positive number")
+//             }
+//         }
+//     },
+//     email: {
+//         type: String,
+//         required: true,
+//         lowercase: true,
+//         trim: true,
+//         validate(value) {
+//             if (!validator.isEmail(value)) {
+//                 throw new Error("Email is invalid!")
+//             }
+//         }
+//     },
+//     password: {
+//         type: String,
+//         minlength: 6,
+//         required: true,
+//         trim: true,
+//         validate(value) {
+//             if (value.toLowerCase().includes('password')) {
+//                 throw new Error("Please enter correct 'password'")
+//             }
+//         }
+//     }
+// })
 
 // const me = new User({
 //     name: "   SDfsdfsa            ",
@@ -60,25 +59,25 @@ const User = mongoose.model("Users", {
 //     console.log(error.message)
 // })
 
-const Tasks = mongoose.model("Tasks", {
-    description: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    completed: {
-        type: Boolean,
-        default: false
-    }
-})
+// const Tasks = mongoose.model("Tasks", {
+//     description: {
+//         type: String,
+//         required: true,
+//         trim: true
+//     },
+//     completed: {
+//         type: Boolean,
+//         default: false
+//     }
+// })
 
-const task = new Tasks({
-    // description: "Clean house",
-    completed: true
-})
+// const task = new Tasks({
+//     // description: "Clean house",
+//     completed: true
+// })
 
-task.save().then((res) => {
-    console.log(res)
-}).catch((err) => {
-    console.log(err.message)
-})
+// task.save().then((res) => {
+//     console.log(res)
+// }).catch((err) => {
+//     console.log(err.message)
+// })
