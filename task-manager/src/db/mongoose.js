@@ -33,37 +33,52 @@ const User = mongoose.model("Users", {
                 throw new Error("Email is invalid!")
             }
         }
+    },
+    password: {
+        type: String,
+        minlength: 6,
+        required: true,
+        trim: true,
+        validate(value) {
+            if (value.toLowerCase().includes('password')) {
+                throw new Error("Please enter correct 'password'")
+            }
+        }
     }
 
 })
 
-const me = new User({
-    name: "   SDfsdfsa            ",
-    email: 'hDDDj@hj.io'
-})
+// const me = new User({
+//     name: "   SDfsdfsa            ",
+//     email: 'hDDDj@hjo',
+//     password: "             123456           "
+// })
 
-me.save().then((response) => {
-    console.log(response)
-}).catch((error) => {
-    console.log(error)
-})
+// me.save().then((response) => {
+//     console.log(response)
+// }).catch((error) => {
+//     console.log(error.message)
+// })
 
 const Tasks = mongoose.model("Tasks", {
     description: {
-        type: String
+        type: String,
+        required: true,
+        trim: true
     },
     completed: {
-        type: Boolean
+        type: Boolean,
+        default: false
     }
 })
 
-// const task = new Tasks({
-//     description: "Clean house",
-//     completed: 12
-// })
+const task = new Tasks({
+    // description: "Clean house",
+    completed: true
+})
 
-// task.save().then((res) => {
-//     console.log(res)
-// }).catch((err) => {
-//     console.log(err)
-// })
+task.save().then((res) => {
+    console.log(res)
+}).catch((err) => {
+    console.log(err.message)
+})
