@@ -38,13 +38,35 @@ app.get("/users/:id", (req, res) => {
     })
 })
 
-app.post('/posts', (req, res) => {
+app.post('/tasks', (req, res) => {
     const task = new Task(req.body)
     task.save().then((resp => {
         res.status(201).send(resp)
     })).catch((err) => {
         res.status(400).send(err)
     })
+})
+
+app.patch("/tasks/:id", async (req, res) => {
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ['description', 'completed']
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+
+    if (!isValidOperation) {
+        return res.status(400).send({ error: "Invalid updates" })
+    }
+
+    try {
+        const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+
+        if (!task) {
+            return res.status(404).send()
+        }
+
+        res.send(task)
+    } catch (e) {
+        res.status(400).send(e)
+    }
 })
 
 app.listen(port, () => {
