@@ -35,5 +35,5 @@ const myFunction = async () => {
     const data = jwt.verify(token, 'thisisnewcourse')
     console.log(data)
 }
-myFunction()
+// myFunction()
 
