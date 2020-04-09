@@ -54,10 +54,10 @@ const pet = {
     name: "germani"
 }
 
-pet.toJSON = function () {
-    console.log(this)
-    return {}
-}
+// pet.toJSON = function () {
+//     console.log(this)
+//     return {}
+// }
 
-console.log(JSON.stringify(pet))
+// console.log(JSON.stringify(pet))
 
