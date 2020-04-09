@@ -1,45 +1,59 @@
 const mongoose = require('mongoose')
 const validator = require("validator")
+const bcrypt = require("bcryptjs")
 
-const User = mongoose.model("Users", {
-    name: {
-        type: String,
-        required: true,
-        uppercase: true,
-        trim: true
-    },
-    age: {
-        type: Number,
-        default: 0,
-        validate(value) {
-            if (value < 0) {
-                throw new Error("Age must be positive number")
+const userSchema = mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: true,
+            uppercase: true,
+            trim: true
+        },
+        age: {
+            type: Number,
+            default: 0,
+            validate(value) {
+                if (value < 0) {
+                    throw new Error("Age must be positive number")
+                }
             }
-        }
-    },
-    email: {
-        type: String,
-        required: true,
-        lowercase: true,
-        trim: true,
-        validate(value) {
-            if (!validator.isEmail(value)) {
-                throw new Error("Email is invalid!")
+        },
+        email: {
+            type: String,
+            required: true,
+            lowercase: true,
+            trim: true,
+            validate(value) {
+                if (!validator.isEmail(value)) {
+                    throw new Error("Email is invalid!")
+                }
             }
-        }
-    },
-    password: {
-        type: String,
-        minlength: 6,
-        required: true,
-        trim: true,
-        validate(value) {
-            if (value.toLowerCase().includes('password')) {
-                throw new Error("Please enter correct 'password'")
+        },
+        password: {
+            type: String,
+            minlength: 6,
+            required: true,
+            trim: true,
+            validate(value) {
+                if (value.toLowerCase().includes('password')) {
+                    throw new Error("Please enter correct 'password'")
+                }
             }
         }
     }
+)
 
+userSchema.pre("save", async function (next) {
+    const user = this
+
+    if (user.isModified("password")) {
+        user.password = await bcrypt.hash(user.password, 8)
+    }
+
+    next()
 })
+
+const User = mongoose.model("Users", userSchema)
 
 module.exports = User
