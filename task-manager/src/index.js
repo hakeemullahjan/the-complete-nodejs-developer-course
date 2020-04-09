@@ -25,5 +25,15 @@ const myFunc = async () => {
     const isMatched = await bcrypt.compare('ali12121', hashedPassword)
     console.log(isMatched)
 }
+// myFunc()
 
-myFunc()
+const jwt = require('jsonwebtoken')
+const myFunction = async () => {
+    const token = jwt.sign({ _id: "abc123" }, 'thisisnewcourse', { expiresIn: "1 seconds" })
+    console.log(token)
+
+    const data = jwt.verify(token, 'thisisnewcourse')
+    console.log(data)
+}
+myFunction()
+
