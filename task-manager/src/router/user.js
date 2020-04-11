@@ -180,6 +180,10 @@ const upload = multer({
 
 router.post("/users/me/avatar", auth, upload.single("avatar"), async (req, res) => {
     req.user.avatar = req.file.buffer
+
+    //Sharp installation problem
+    // const buffer = await Sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
+    // req.user.avatar=buffer
     await req.user.save()
     res.send()
 }, (error, req, res, next) => {
