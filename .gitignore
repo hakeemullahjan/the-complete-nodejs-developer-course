@@ -1,3 +1,4 @@
 node_modules
 .env
 task-manager/config/dev.env
+config
