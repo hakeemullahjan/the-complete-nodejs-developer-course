@@ -25,18 +25,32 @@ beforeEach(async () => {
 // })
 
 test('should signup a new user', async () => {
-    await request(app).post("/users").send({
+    const response = await request(app).post("/users").send({
         name: "hakeemullah",
         email: "h.jan211@gmail.com",
         password: "12121212"
     }).expect(201)
+
+    const user = await User.findById(response.body.user._id)
+    expect(user).not.toBeNull()
+
+    expect(response.body).toMatchObject({
+        user: {
+            name: "HAKEEMULLAH",
+            email: "h.jan211@gmail.com",
+        },
+        token: user.tokens[0].token
+    })
+    expect(user.password).not.toBe("12121212")
 })
 
 test('should login existing user', async () => {
-    await request(app).post("/users/login").send({
+    const response = await request(app).post("/users/login").send({
         email: userOne.email,
         password: userOne.password
     }).expect(200)
+    const user = await User.findById(userOneId)
+    expect(response.body.token).toBe(user.tokens[1].token)
 })
 
 test('should not login nonexisting user', async () => {
@@ -52,6 +66,8 @@ test('should get profile for user', async () => {
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .send()
         .expect(200)
+    const user = await User.findById(userOneId)
+    expect(user).toBeNull()
 })
 
 test('should not get profile for unauthenticated user', async () => {
