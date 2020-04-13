@@ -41,5 +41,5 @@ test('should add two numbers', (done) => {
 
 test('should add two numbers async/await', async () => {
     const sum = await add(3, 17)
-    expect(sum).toBe(10)
+    expect(sum).toBe(20)
 })
