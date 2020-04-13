@@ -67,7 +67,7 @@ test('should get profile for user', async () => {
         .send()
         .expect(200)
     const user = await User.findById(userOneId)
-    expect(user).toBeNull()
+    expect(user).not.toBeNull()
 })
 
 test('should not get profile for unauthenticated user', async () => {
