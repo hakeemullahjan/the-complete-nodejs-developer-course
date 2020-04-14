@@ -15,12 +15,10 @@ let count = 0
 io.on("connection", (socket) => {
     console.log("New WebSocket connection")
 
-    socket.emit("countUpdate", count)
+    socket.emit("message", 'Welcome')
 
-    socket.on("increment", () => {
-        count++
-        // socket.emit("countUpdate", count)
-        io.emit("countUpdate", count)
+    socket.on("sendMessage", (message) => {
+        io.emit("message", message)
     })
 
 })
